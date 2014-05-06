@@ -1,14 +1,13 @@
-package distributedelection;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package server;
 
 /**
  *
  * @author Carlos-p
  */
-public class Gestor {
-    
+public enum Estado {
+    Corriendo, Parado
 }

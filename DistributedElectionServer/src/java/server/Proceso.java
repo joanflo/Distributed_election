@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedelection;
+package server;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,11 +13,15 @@ import java.util.logging.Logger;
  */
 public class Proceso implements Runnable {
     
+    private final int NUM_PROCESOS = 6;
+            
+    private int id;
     private Estado estado;
-    private Proceso coordinador;
+    private int coordinador;
     
-    public enum Estado {
-        Corriendo, Parado
+    public Proceso (int id) {
+        this.id = id;
+        estado = Estado.Corriendo;
     }
     
     @Override
@@ -25,13 +29,18 @@ public class Proceso implements Runnable {
         while (estado == Estado.Corriendo) {
             try {
                 Thread.sleep((long)(Math.random()*500 + 500));
-                if (coordinador.computar() < 0) {
-                    
-                }
+                
+                //if (coordinador.computar() < 0) {
+                    eleccion();
+                //}
             } catch (InterruptedException ex) {
                 Logger.getLogger(Proceso.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public void coordinador(int idCoordinador) {
+        coordinador = idCoordinador;
     }
     
     public void arrancar() {
@@ -52,7 +61,11 @@ public class Proceso implements Runnable {
     }
     
     public int computar() {
-        return 0;
+        if (estado == Estado.Parado) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
     
 }
